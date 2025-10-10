@@ -54,7 +54,7 @@ public class MultiAgentServiceImpl implements IMultiAgentService {
     public void handleMultiAgentRequest(AgentRequest autoReq,SseEmitter sseEmitter) {
         long startTime = System.currentTimeMillis();
         Request request = buildHttpRequest(autoReq);
-        log.info("{} agentRequest:{}", autoReq.getRequestId(), JSON.toJSONString(request));
+        log.info("{} agentRequest:{}", autoReq.getRequestId(), JSON.toJSONString(request.body()));
         OkHttpClient client = new OkHttpClient.Builder()
                 .connectTimeout(60, TimeUnit.SECONDS) // 设置连接超时时间为 60 秒
                 .readTimeout(genieConfig.getSseClientReadTimeout(), TimeUnit.SECONDS)    // 设置读取超时时间为 60 秒
@@ -127,14 +127,13 @@ public class MultiAgentServiceImpl implements IMultiAgentService {
     }
 
     private Request buildHttpRequest(AgentRequest autoReq) {
-        String reqId = autoReq.getRequestId();
+        Integer serverPort = genieConfig.getServerPort();
         autoReq.setRequestId(autoReq.getRequestId());
-        String url = "http://127.0.0.1:8080/AutoAgent";
+        String url = "http://127.0.0.1:" + serverPort + "/AutoAgent";
         RequestBody body = RequestBody.create(
                 MediaType.parse("application/json"),
                 JSONObject.toJSONString(autoReq)
         );
-        autoReq.setRequestId(reqId);
         return new Request.Builder().url(url).post(body).build();
     }
 

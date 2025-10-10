@@ -19,6 +19,7 @@ import java.util.Map;
 public class GenieConfig {
 
     private Map<String, String> plannerSystemPromptMap = new HashMap<>();
+
     @Value("${autobots.autoagent.planner.system_prompt:{}}")
     public void setPlannerSystemPromptMap(String list) {
         plannerSystemPromptMap = JSONObject.parseObject(list, new TypeReference<Map<String, String>>() {
@@ -26,6 +27,7 @@ public class GenieConfig {
     }
 
     private Map<String, String> plannerNextStepPromptMap = new HashMap<>();
+
     @Value("${autobots.autoagent.planner.next_step_prompt:{}}")
     public void setPlannerNextStepPromptMap(String list) {
         plannerNextStepPromptMap = JSONObject.parseObject(list, new TypeReference<Map<String, String>>() {
@@ -33,6 +35,7 @@ public class GenieConfig {
     }
 
     private Map<String, String> executorSystemPromptMap = new HashMap<>();
+
     @Value("${autobots.autoagent.executor.system_prompt:{}}")
     public void setExecutorSystemPromptMap(String list) {
         executorSystemPromptMap = JSONObject.parseObject(list, new TypeReference<Map<String, String>>() {
@@ -40,6 +43,7 @@ public class GenieConfig {
     }
 
     private Map<String, String> executorNextStepPromptMap = new HashMap<>();
+
     @Value("${autobots.autoagent.executor.next_step_prompt:{}}")
     public void setExecutorNextStepPromptMap(String list) {
         executorNextStepPromptMap = JSONObject.parseObject(list, new TypeReference<Map<String, String>>() {
@@ -47,6 +51,7 @@ public class GenieConfig {
     }
 
     private Map<String, String> executorSopPromptMap = new HashMap<>();
+
     @Value("${autobots.autoagent.executor.sop_prompt:{}}")
     public void setExecutorSopPromptMap(String list) {
         executorSopPromptMap = JSONObject.parseObject(list, new TypeReference<Map<String, String>>() {
@@ -54,6 +59,7 @@ public class GenieConfig {
     }
 
     private Map<String, String> reactSystemPromptMap = new HashMap<>();
+
     @Value("${autobots.autoagent.react.system_prompt:{}}")
     public void setReactSystemPromptMap(String list) {
         reactSystemPromptMap = JSONObject.parseObject(list, new TypeReference<Map<String, String>>() {
@@ -61,6 +67,7 @@ public class GenieConfig {
     }
 
     private Map<String, String> reactNextStepPromptMap = new HashMap<>();
+
     @Value("${autobots.autoagent.react.next_step_prompt:{}}")
     public void setReactNextStepPromptMap(String list) {
         reactNextStepPromptMap = JSONObject.parseObject(list, new TypeReference<Map<String, String>>() {
@@ -95,6 +102,7 @@ public class GenieConfig {
      * planTool 配置
      */
     private Map<String, Object> planToolParams = new HashMap<>();
+
     @Value("${autobots.autoagent.tool.plan_tool.params:{}}")
     public void setPlanToolParams(String jsonStr) {
         this.planToolParams = JSON.parseObject(jsonStr, Map.class);
@@ -104,6 +112,7 @@ public class GenieConfig {
      * codeAgent 配置
      */
     private Map<String, Object> codeAgentPamras = new HashMap<>();
+
     @Value("${autobots.autoagent.tool.code_agent.params:{}}")
     public void setCodeAgentPamras(String jsonStr) {
         this.codeAgentPamras = JSON.parseObject(jsonStr, Map.class);
@@ -113,6 +122,7 @@ public class GenieConfig {
      * reportTool 配置
      */
     private Map<String, Object> reportToolPamras = new HashMap<>();
+
     @Value("${autobots.autoagent.tool.report_tool.params:{}}")
     public void setHtmlToolPamras(String jsonStr) {
         this.reportToolPamras = JSON.parseObject(jsonStr, Map.class);
@@ -122,6 +132,7 @@ public class GenieConfig {
      * fileTool 配置
      */
     private Map<String, Object> fileToolPamras = new HashMap<>();
+
     @Value("${autobots.autoagent.tool.file_tool.params:{}}")
     public void setFileoolPamras(String jsonStr) {
         this.fileToolPamras = JSON.parseObject(jsonStr, Map.class);
@@ -131,6 +142,7 @@ public class GenieConfig {
      * DeepSearchTool 配置
      */
     private Map<String, Object> deepSearchToolPamras = new HashMap<>();
+
     @Value("${autobots.autoagent.tool.deep_search.params:{}}")
     public void setDeepSearchToolPamras(String jsonStr) {
         this.deepSearchToolPamras = JSON.parseObject(jsonStr, Map.class);
@@ -161,6 +173,7 @@ public class GenieConfig {
     private String deepSearchPageCount;
 
     private Map<String, String> multiAgentToolListMap = new HashMap<>();
+
     @Value("${autobots.autoagent.tool_list:{}}")
     public void setMultiAgentToolList(String list) {
         multiAgentToolListMap = JSONObject.parseObject(list, new TypeReference<Map<String, String>>() {
@@ -171,6 +184,7 @@ public class GenieConfig {
      * LLM Settings
      */
     private Map<String, LLMSettings> llmSettingsMap;
+
     @Value("${llm.settings:{}}")
     public void setLLMSettingsMap(String jsonStr) {
         this.llmSettingsMap = JSON.parseObject(jsonStr, new TypeReference<Map<String, LLMSettings>>() {
@@ -184,7 +198,7 @@ public class GenieConfig {
     private Integer executorMaxSteps;
 
     @Value("${autobots.autoagent.react.max_steps:40}")
-    private Integer reactMaxSteps;;
+    private Integer reactMaxSteps;
 
     @Value("${autobots.autoagent.executor.max_observe:10000}")
     private String maxObserve;
@@ -211,6 +225,7 @@ public class GenieConfig {
     private Integer messageSizeLimit;
 
     private Map<String, String> sensitivePatterns = new HashMap<>();
+
     @Value("${autobots.autoagent.sensitive_patterns:{}}")
     public void setSensitivePatterns(String jsonStr) {
         this.sensitivePatterns = JSON.parseObject(jsonStr, new TypeReference<Map<String, String>>() {
@@ -218,6 +233,7 @@ public class GenieConfig {
     }
 
     private Map<String, String> outputStylePrompts = new HashMap<>();
+
     @Value("${autobots.autoagent.output_style_prompts:{}}")
     public void setOutputStylePrompts(String jsonStr) {
         this.outputStylePrompts = JSON.parseObject(jsonStr, new TypeReference<Map<String, String>>() {
@@ -225,6 +241,7 @@ public class GenieConfig {
     }
 
     private Map<String, String> messageInterval = new HashMap<>();
+
     @Value("${autobots.autoagent.message_interval:{}}")
     public void setMessageInterval(String jsonStr) {
         this.messageInterval = JSON.parseObject(jsonStr, new TypeReference<Map<String, String>>() {
@@ -232,19 +249,20 @@ public class GenieConfig {
     }
 
     private String structParseToolSystemPrompt = "";
+
     @Value("${autobots.autoagent.struct_parse_tool_system_prompt:}")
     public void setStructParseToolSystemPrompt(String str) {
         this.structParseToolSystemPrompt = str;
     }
 
-	@Value("${autobots.multiagent.sseClient.readTimeout:1800}")
-	private Integer sseClientReadTimeout;
+    @Value("${autobots.multiagent.sseClient.readTimeout:1800}")
+    private Integer sseClientReadTimeout;
 
-	@Value("${autobots.multiagent.sseClient.connectTimeout:1800}")
-	private Integer sseClientConnectTimeout;
+    @Value("${autobots.multiagent.sseClient.connectTimeout:1800}")
+    private Integer sseClientConnectTimeout;
 
-	@Value("${autobots.autoagent.genie_sop_prompt:}")
-	private String genieSopPrompt;
+    @Value("${autobots.autoagent.genie_sop_prompt:}")
+    private String genieSopPrompt;
 
     @Value("${autobots.autoagent.genie_base_prompt:}")
     private String genieBasePrompt;
@@ -252,5 +270,9 @@ public class GenieConfig {
     @Value("${autobots.autoagent.tool.task_complete_desc:当前task完成，请将当前task标记为 completed}")
     private String taskCompleteDesc;
 
+    @Value("${server.port:8080}")
+    private Integer serverPort;
 
+    @Value("${llm.business.enable_litellm_proxy: 默认后端模型不使用litellm 代理的大模型，而是使用官方模型}")
+    private Boolean enableLiteLLMProxy;
 }
