@@ -529,8 +529,10 @@ public class LLM {
             } else {
                 // 处理流式请求
                 params.put("stream", true);
-
-                if (model.contains("claude")) {
+                GenieConfig genieConfig = SpringContextHolder.getApplicationContext().getBean(GenieConfig.class);
+                Boolean enableLiteLLMProxy = genieConfig.getEnableLiteLLMProxy();
+                // 使用litellm模型就跳过claude工具格式转换
+                if (!enableLiteLLMProxy && model.contains("claude")) {
                     return callClaudeFunctionCallStream(context, params);
                 }
                 // 调用流式 API
@@ -657,6 +659,7 @@ public class LLM {
                         StringBuilder stringBuilder = new StringBuilder();
                         StringBuilder stringBuilderAll = new StringBuilder();
                         int index = 1;
+                        int toolCallIndex = 0;
                         Map<Integer, OpenAIToolCall> openToolCallsMap = new HashMap<>();
                         String line;
                         BufferedReader reader = new BufferedReader(
@@ -676,10 +679,11 @@ public class LLM {
                                     if (chunk.has("choices") && !chunk.get("choices").isEmpty()) {
                                         for (JsonNode element : chunk.get("choices")) {
                                             OpenAIChoice choice = objectMapper.convertValue(element, OpenAIChoice.class);
+
                                             // content
                                             if (Objects.nonNull(choice.delta.content)) {
                                                 String content = choice.delta.content;
-                                                // log.info("{} recv content data: >>{}<<", context.getRequestId(), content);
+                                                log.info("{} recv content data: >>{}<<", context.getRequestId(), content);
                                                 if (!isContent) { // 忽略json内容
                                                     stringBuilderAll.append(content);
                                                     continue;
@@ -700,24 +704,29 @@ public class LLM {
                                             // tool call
                                             if (Objects.nonNull(choice.delta.tool_calls)) {
                                                 List<OpenAIToolCall> openAIToolCalls = choice.delta.tool_calls;
-                                                // log.info("{} recv tool call data: {}", context.getRequestId(), openAIToolCalls);
+                                                log.info("{} recv tool call data: {}", context.getRequestId(), openAIToolCalls);
                                                 for (OpenAIToolCall toolCall : openAIToolCalls) {
+                                                    // [{"index":0,"id":"call_j74R8JMFWTC4rW5wHJ0TtmNU","type":"function","function":{"name":"planning","arguments":""}}]
                                                     OpenAIToolCall currentToolCall = openToolCallsMap.get(toolCall.index);
+                                                    if (Objects.nonNull(currentToolCall) && StringUtil.isNotEmpty(toolCall.id) && !currentToolCall.id.equals(toolCall.id)) {
+                                                        openToolCallsMap.remove(toolCall.index);
+                                                        openToolCallsMap.put(++toolCallIndex, currentToolCall);
+                                                        currentToolCall = null;
+                                                    }
                                                     if (Objects.isNull(currentToolCall)) {
                                                         currentToolCall = new OpenAIToolCall();
                                                     }
-                                                    // [{"index":0,"id":"call_j74R8JMFWTC4rW5wHJ0TtmNU","type":"function","function":{"name":"planning","arguments":""}}]
-                                                    if (Objects.nonNull(toolCall.id)) {
+                                                    if (StringUtil.isNotEmpty(toolCall.id)) {
                                                         currentToolCall.id = toolCall.id;
                                                     }
-                                                    if (Objects.nonNull(toolCall.type)) {
+                                                    if (StringUtil.isNotEmpty(toolCall.type)) {
                                                         currentToolCall.type = toolCall.type;
                                                     }
                                                     if (Objects.nonNull(toolCall.function)) {
-                                                        if (Objects.nonNull(toolCall.function.name)) {
+                                                        if (StringUtil.isNotEmpty(toolCall.function.name)) {
                                                             currentToolCall.function = toolCall.function;
                                                         }
-                                                        if (Objects.nonNull(toolCall.function.arguments)) {
+                                                        if (StringUtil.isNotEmpty(toolCall.function.arguments)) {
                                                             currentToolCall.function.arguments += toolCall.function.arguments;
                                                         }
                                                     }
