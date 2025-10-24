@@ -25,8 +25,8 @@ public class GptProcessServiceImpl implements IGptProcessService {
         String traceId = ChateiUtils.getRequestId(req);
         req.setTraceId(traceId);
         final SseEmitter emitter = SseUtil.build(timeoutMillis, req.getTraceId());
-        multiAgentService.searchForAgentRequest(req, emitter);
         log.info("queryMultiAgentIncrStream GptQueryReq request:{}", req);
+        multiAgentService.searchForAgentRequest(req, emitter);
         return emitter;
     }
 }

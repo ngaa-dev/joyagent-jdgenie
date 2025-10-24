@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class File {
+public class  File {
     private String ossUrl;
     private String domainUrl;
     private String fileName;

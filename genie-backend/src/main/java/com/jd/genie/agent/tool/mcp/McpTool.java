@@ -70,7 +70,8 @@ public class McpTool implements BaseTool {
             log.info("list tool request: {} response: {}", JSON.toJSONString(mcpToolRequest), response);
             return response;
         } catch (Exception e) {
-            log.error("{} list tool error", agentContext.getRequestId(), e);
+//            log.error("{} list tool error", agentContext.getRequestId());
+            log.error("list tool error", e);
         }
         return "";
     }
