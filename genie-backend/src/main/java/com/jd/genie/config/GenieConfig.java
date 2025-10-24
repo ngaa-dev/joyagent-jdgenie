@@ -95,7 +95,7 @@ public class GenieConfig {
     @Value("${autobots.autoagent.tool.file_tool.desc:}")
     private String fileToolDesc;
 
-    @Value("${autobots.autoagent.tool.deep_search_tool.desc:}")
+    @Value("${autobots.autoagent.tool.deep_search.desc:}")
     private String deepSearchToolDesc;
 
     /**

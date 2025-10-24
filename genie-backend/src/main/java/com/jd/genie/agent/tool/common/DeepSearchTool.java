@@ -39,7 +39,7 @@ public class DeepSearchTool implements BaseTool {
 
     @Override
     public String getDescription() {
-        String desc = "这是一个搜索工具，可以通过搜索内外网知识";
+        String desc = "根据用户的自然语言查询，实时搜索互联网，获取相关网页结果，用于获取最新、权威的外部信息。";
         GenieConfig genieConfig = SpringContextHolder.getApplicationContext().getBean(GenieConfig.class);
         return genieConfig.getDeepSearchToolDesc().isEmpty() ? desc : genieConfig.getDeepSearchToolDesc();
     }
