@@ -90,7 +90,7 @@ async def markdown_report(
     prompt = Template(get_prompt("report")["markdown_prompt"]) \
         .render(task=task, files=truncate_flat_files, current_time=datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
 
-    async for chunk in ask_llm(messages=prompt, model=model, stream=True,
+    async for chunk in ask_llm(messages=prompt, model=model, stream=False,
                                temperature=temperature, top_p=top_p, only_content=True):
         yield chunk
 
