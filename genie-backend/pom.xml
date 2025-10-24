@@ -12,7 +12,7 @@
     
     <groupId>com.example</groupId>
     <artifactId>genie-backend</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.2.0</version>
     <name>genie-backend</name>
     <description>Genie backend service</description>
     
